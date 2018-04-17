@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="我来试试">
+<meta name="description" content="1：通过SerializeFilter来定义fastjson。tojsonstring方法输出的json属性格式     SerializeFilter是通过编程扩展的方式定制序列化。     fastjson支持6种SerializeFilter，用于不同场景的定制序列化。      PropertyPreFilter 根据PropertyName判断是否序列化      PropertyFil">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hey, my blog">
-<meta property="og:url" content="http://yoursite.com/2018/04/17/hey-my-blog/index.html">
+<meta property="og:title" content="Note for FastJson">
+<meta property="og:url" content="http://yoursite.com/2018/04/17/Note-for-FastJson/index.html">
 <meta property="og:site_name" content="youngking&#39;s Nest">
-<meta property="og:description" content="我来试试">
+<meta property="og:description" content="1：通过SerializeFilter来定义fastjson。tojsonstring方法输出的json属性格式     SerializeFilter是通过编程扩展的方式定制序列化。     fastjson支持6种SerializeFilter，用于不同场景的定制序列化。      PropertyPreFilter 根据PropertyName判断是否序列化      PropertyFil">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-17T07:40:13.000Z">
+<meta property="og:updated_time" content="2018-04-17T08:48:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hey, my blog">
-<meta name="twitter:description" content="我来试试">
+<meta name="twitter:title" content="Note for FastJson">
+<meta name="twitter:description" content="1：通过SerializeFilter来定义fastjson。tojsonstring方法输出的json属性格式     SerializeFilter是通过编程扩展的方式定制序列化。     fastjson支持6种SerializeFilter，用于不同场景的定制序列化。      PropertyPreFilter 根据PropertyName判断是否序列化      PropertyFil">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/17/hey-my-blog/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/17/Note-for-FastJson/"/>
 
 
 
 
 
-  <title>hey, my blog | youngking's Nest</title>
+  <title>Note for FastJson | youngking's Nest</title>
   
 
 
@@ -234,7 +234,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/hey-my-blog/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/Note-for-FastJson/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jing.yang">
@@ -251,7 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">hey, my blog</h1>
+          <h1 class="post-title" itemprop="name headline">Note for FastJson</h1>
         
 
         <div class="post-meta">
@@ -263,7 +263,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T15:39:38+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T16:47:40+08:00">
                 2018-04-17
               </time>
             
@@ -301,8 +301,70 @@
       
 
       
-        <p>我来试试</p>
+        <p>1：通过SerializeFilter来定义fastjson。tojsonstring方法输出的json属性格式</p>
+<pre><code>    SerializeFilter是通过编程扩展的方式定制序列化。
+    fastjson支持6种SerializeFilter，用于不同场景的定制序列化。
 
+    PropertyPreFilter 根据PropertyName判断是否序列化 
+    PropertyFilter 根据PropertyName和PropertyValue来判断是否序列化 
+    NameFilter 修改Key，如果需要修改Key,process返回值则可 
+    ValueFilter 修改Value 
+    BeforeFilter 序列化时在最前添加内容 
+    AfterFilter 序列化时在最后添加内容
+
+
+代码：
+
+    private static SerializerFeature[] features = {
+            SerializerFeature.WriteNullNumberAsZero,
+            SerializerFeature.WriteNullStringAsEmpty,
+            SerializerFeature.WriteMapNullValue,
+            SerializerFeature.DisableCircularReferenceDetect,
+            SerializerFeature.WriteDateUseDateFormat
+
+    };
+</code></pre><p>2、    自定义定制序列化 (使用了自定义定制序列化后，就不会读取 anotation的序列化配置)</p>
+<pre><code>PropertyPreFilter 根据PropertyName判断是否序列化
+PropertyFilter 根据PropertyName和PropertyValue来判断是否序列化
+NameFilter 修改Key，如果需要修改Key,process返回值则可
+ValueFilter 修改Value
+BeforeFilter 序列化时在最前添加内容
+AfterFilter 序列化时在最后添加内容
+
+代码：
+    NameFilter nameFilter = new NameFilter() {
+        @Override
+        public String process(Object o, String propertyName, Object o1) {
+            return StrUtils.underscoreName(propertyName);
+        }
+    };
+
+    JSON.toJSONString(result, nameFilter, features);
+</code></pre><p>3、驼峰转下划线方法</p>
+<pre><code>代码：
+
+    public class StrUtils {
+        public static String underscoreName(String camelCaseName) {
+            StringBuilder result = new StringBuilder();
+            if (camelCaseName != null &amp;&amp; camelCaseName.length() &gt; 0) {
+                result.append(camelCaseName.substring(0, 1).toLowerCase());
+                for (int i = 1; i &lt; camelCaseName.length(); i++) {
+                    char ch = camelCaseName.charAt(i);
+                    if (Character.isUpperCase(ch)) {
+                        result.append(&quot;_&quot;);
+                        result.append(Character.toLowerCase(ch));
+                    } else {
+                        result.append(ch);
+                    }
+                }
+            }
+            return result.toString();
+        }
+    }
+</code></pre><p>4、FastJson 解析报错deserializer error</p>
+<pre><code>1.关闭ASM
+    设置ParserConfig.getGlobalInstance().setAsmEnable(false); 
+</code></pre>
       
     </div>
     
@@ -326,15 +388,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/04/17/hey-my-blog/" rel="next" title="hey, my blog">
+                <i class="fa fa-chevron-left"></i> hey, my blog
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/17/Note-for-FastJson/" rel="prev" title="Note for FastJson">
-                Note for FastJson <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
