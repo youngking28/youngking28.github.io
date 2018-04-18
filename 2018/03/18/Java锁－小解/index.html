@@ -79,15 +79,18 @@
 
 
 
+<meta name="description" content="前言锁是什么，Java为什么需要锁？ 有哪些锁？ 有哪些锁关键字？ 锁是什么, Java为什么需要锁？如果要谈论起锁这件事情，那么一定要了解一下多进程并发。简单理解就是 同时 在干某件事情。这里的同时，就特别重要。例如说对于一个方法， 同时被5个地方调用，这时候就有了资源问题。 一起拿到了这个资源，那么该如何分配这个资源？从根本上而言， 没有绝对的并发。时间颗粒度有极为细小的区分，只是这段方法或者">
 <meta name="keywords" content="java基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java锁－小解">
 <meta property="og:url" content="http://yoursite.com/2018/03/18/Java锁－小解/index.html">
 <meta property="og:site_name" content="youngking&#39;s Nest">
+<meta property="og:description" content="前言锁是什么，Java为什么需要锁？ 有哪些锁？ 有哪些锁关键字？ 锁是什么, Java为什么需要锁？如果要谈论起锁这件事情，那么一定要了解一下多进程并发。简单理解就是 同时 在干某件事情。这里的同时，就特别重要。例如说对于一个方法， 同时被5个地方调用，这时候就有了资源问题。 一起拿到了这个资源，那么该如何分配这个资源？从根本上而言， 没有绝对的并发。时间颗粒度有极为细小的区分，只是这段方法或者">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-18T02:38:18.000Z">
+<meta property="og:updated_time" content="2018-04-18T03:57:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java锁－小解">
+<meta name="twitter:description" content="前言锁是什么，Java为什么需要锁？ 有哪些锁？ 有哪些锁关键字？ 锁是什么, Java为什么需要锁？如果要谈论起锁这件事情，那么一定要了解一下多进程并发。简单理解就是 同时 在干某件事情。这里的同时，就特别重要。例如说对于一个方法， 同时被5个地方调用，这时候就有了资源问题。 一起拿到了这个资源，那么该如何分配这个资源？从根本上而言， 没有绝对的并发。时间颗粒度有极为细小的区分，只是这段方法或者">
 
 
 
@@ -309,7 +312,25 @@
       
 
       
-        
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><pre><code>锁是什么，Java为什么需要锁？
+有哪些锁？
+有哪些锁关键字？
+</code></pre><h5 id="锁是什么-Java为什么需要锁？"><a href="#锁是什么-Java为什么需要锁？" class="headerlink" title="锁是什么, Java为什么需要锁？"></a>锁是什么, Java为什么需要锁？</h5><p>如果要谈论起锁这件事情，那么一定要了解一下多进程并发。<br>简单理解就是 <strong>同时</strong> 在干某件事情。<br>这里的同时，就特别重要。例如说对于一个方法， 同时被5个地方调用，这时候就有了<strong>资源</strong>问题。</p>
+<p><strong>一起拿到了这个资源，</strong>那么该如何分配这个资源？<br>从根本上而言， 没有绝对的并发。时间颗粒度有极为细小的区分，只是这段方法或者这个资源还没有被上一个调用者使用完毕，就要被下一个调用者使用，这个时候就产生了并发现象，产生数据错乱，甚至死锁<code>deadlock</code>。</p>
+<p>这就是为什么Java为什么需要锁的原因。</p>
+<p>Java的锁是，对这个<strong>资源</strong>上锁，实质上是给这个<strong>资源</strong>一个标志，告诉所有人：你们这些人得按规矩使用这个<strong>资源</strong>，要排队！上一个还没用完，下一个不准使用！等着！</p>
+<h5 id="有哪些锁？"><a href="#有哪些锁？" class="headerlink" title="有哪些锁？"></a>有哪些锁？</h5><p>总体而言， 有两种锁机制。<br><code>乐观锁（Optimistic Locking）悲观锁（Perssimisitc Lock）</code><br>对于所有而言：<br><strong>悲观锁：假定会发生并发冲突，屏蔽一切可能违反数据完整性的操作。<br>乐观锁：假设不会发生并发冲突</strong></p>
+<p>对于Java而言：<br>悲观锁是一个<strong>独占锁</strong>的概念，假设这个<strong>资源</strong>一定会发生并发问题，当一个<strong>资源</strong>不可用时， 强制让其他进程挂起，直到这个<strong>资源</strong>被释放，才唤醒其他等待进程，进行下一轮争夺<strong>资源</strong>和上锁。</p>
+<p>乐观锁则是假设这个<strong>资源</strong>不会产生并发问题，进行了处理流程，但是要对结果进行检查，如果因为并发冲突问题而产生了错误，则重试原操作，直到成功并正确。</p>
+<h5 id="有哪些锁关键字？"><a href="#有哪些锁关键字？" class="headerlink" title="有哪些锁关键字？"></a>有哪些锁关键字？</h5><p>Java中共有两个锁关键字<code>synchronized</code> <code>volatile</code></p>
+<p><strong>synchronized</strong><br>1.典型的悲观锁机制， 可以修饰<strong>方法、语句块</strong>，从而实现<strong>同一时刻只有一个线程能够执行</strong><br>2.具有<strong>原子性、可见性</strong></p>
+<p><strong>volatile</strong><br>1.修饰<strong>变量</strong>，保证线程在每次使用变量的时候，都会读取变量修改后的最的值。<br>2.具有<strong>可见性</strong><br>3.volatile可以禁止进行指令重排。</p>
+<pre><code>指令重排是指处理器为了提高程序运行效率，可能会对输入代码进行优化，它不保证各个语句的执行顺序同代码中的顺序一致，但是它会保证程序最终执行结果和代码顺序执行的结果是一致的。指令重排序不会影响单个线程的执行，但是会影响到线程并发执行的正确性。
+</code></pre><p>程序执行到volatile修饰变量的读操作或者写操作时，在其前面的<strong>操作肯定已经完成</strong>，且结果已经对后面的操作可见，在其后面的操作肯定还没有进行。</p>
+<hr>
+<h6 id="题外注"><a href="#题外注" class="headerlink" title="题外注"></a>题外注</h6><pre><code>原子性：保持一致，要么不开始，开始必定要完成。
+可见性：一旦修改，值对所有进程显示的都是最新值。
+</code></pre>
       
     </div>
     
@@ -399,8 +420,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -451,6 +481,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#锁是什么-Java为什么需要锁？"><span class="nav-number">1.0.1.</span> <span class="nav-text">锁是什么, Java为什么需要锁？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#有哪些锁？"><span class="nav-number">1.0.2.</span> <span class="nav-text">有哪些锁？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#有哪些锁关键字？"><span class="nav-number">1.0.3.</span> <span class="nav-text">有哪些锁关键字？</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#题外注"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">题外注</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

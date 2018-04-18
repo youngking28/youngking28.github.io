@@ -325,16 +325,8 @@
 
 
 代码：
-
-    private static SerializerFeature[] features = {
-            SerializerFeature.WriteNullNumberAsZero,
-            SerializerFeature.WriteNullStringAsEmpty,
-            SerializerFeature.WriteMapNullValue,
-            SerializerFeature.DisableCircularReferenceDetect,
-            SerializerFeature.WriteDateUseDateFormat
-
-    };
-</code></pre><p>2、    自定义定制序列化 (使用了自定义定制序列化后，就不会读取 anotation的序列化配置)</p>
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> SerializerFeature[] features = &#123;</span><br><span class="line">        SerializerFeature.WriteNullNumberAsZero,</span><br><span class="line">        SerializerFeature.WriteNullStringAsEmpty,</span><br><span class="line">        SerializerFeature.WriteMapNullValue,</span><br><span class="line">        SerializerFeature.DisableCircularReferenceDetect,</span><br><span class="line">        SerializerFeature.WriteDateUseDateFormat</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>2、    自定义定制序列化 (使用了自定义定制序列化后，就不会读取 anotation的序列化配置)</p>
 <pre><code>PropertyPreFilter 根据PropertyName判断是否序列化
 PropertyFilter 根据PropertyName和PropertyValue来判断是否序列化
 NameFilter 修改Key，如果需要修改Key,process返回值则可
@@ -353,29 +345,13 @@ AfterFilter 序列化时在最后添加内容
     JSON.toJSONString(result, nameFilter, features);
 </code></pre><p>3、驼峰转下划线方法</p>
 <pre><code>代码：
-
-    public class StrUtils {
-        public static String underscoreName(String camelCaseName) {
-            StringBuilder result = new StringBuilder();
-            if (camelCaseName != null &amp;&amp; camelCaseName.length() &gt; 0) {
-                result.append(camelCaseName.substring(0, 1).toLowerCase());
-                for (int i = 1; i &lt; camelCaseName.length(); i++) {
-                    char ch = camelCaseName.charAt(i);
-                    if (Character.isUpperCase(ch)) {
-                        result.append(&quot;_&quot;);
-                        result.append(Character.toLowerCase(ch));
-                    } else {
-                        result.append(ch);
-                    }
-                }
-            }
-            return result.toString();
-        }
-    }
-</code></pre><p>4、FastJson 解析报错deserializer error</p>
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">      <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StrUtils</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">underscoreName</span><span class="params">(String camelCaseName)</span> </span>&#123;</span><br><span class="line">        StringBuilder result = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">if</span> (camelCaseName != <span class="keyword">null</span> &amp;&amp; camelCaseName.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            result.append(camelCaseName.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase());</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; camelCaseName.length(); i++) &#123;</span><br><span class="line">                <span class="keyword">char</span> ch = camelCaseName.charAt(i);</span><br><span class="line">                <span class="keyword">if</span> (Character.isUpperCase(ch)) &#123;</span><br><span class="line">                    result.append(<span class="string">"_"</span>);</span><br><span class="line">                    result.append(Character.toLowerCase(ch));</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    result.append(ch);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4、FastJson 解析报错deserializer error</p>
 <pre><code>1.关闭ASM
-    设置ParserConfig.getGlobalInstance().setAsmEnable(false); 
+    设置
+</code></pre><pre><code class="java">ParserConfig.getGlobalInstance().setAsmEnable(<span class="keyword">false</span>); 
 </code></pre>
+
           
         
       
@@ -614,7 +590,25 @@ AfterFilter 序列化时在最后添加内容
       
         
           
-            
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><pre><code>锁是什么，Java为什么需要锁？
+有哪些锁？
+有哪些锁关键字？
+</code></pre><h5 id="锁是什么-Java为什么需要锁？"><a href="#锁是什么-Java为什么需要锁？" class="headerlink" title="锁是什么, Java为什么需要锁？"></a>锁是什么, Java为什么需要锁？</h5><p>如果要谈论起锁这件事情，那么一定要了解一下多进程并发。<br>简单理解就是 <strong>同时</strong> 在干某件事情。<br>这里的同时，就特别重要。例如说对于一个方法， 同时被5个地方调用，这时候就有了<strong>资源</strong>问题。</p>
+<p><strong>一起拿到了这个资源，</strong>那么该如何分配这个资源？<br>从根本上而言， 没有绝对的并发。时间颗粒度有极为细小的区分，只是这段方法或者这个资源还没有被上一个调用者使用完毕，就要被下一个调用者使用，这个时候就产生了并发现象，产生数据错乱，甚至死锁<code>deadlock</code>。</p>
+<p>这就是为什么Java为什么需要锁的原因。</p>
+<p>Java的锁是，对这个<strong>资源</strong>上锁，实质上是给这个<strong>资源</strong>一个标志，告诉所有人：你们这些人得按规矩使用这个<strong>资源</strong>，要排队！上一个还没用完，下一个不准使用！等着！</p>
+<h5 id="有哪些锁？"><a href="#有哪些锁？" class="headerlink" title="有哪些锁？"></a>有哪些锁？</h5><p>总体而言， 有两种锁机制。<br><code>乐观锁（Optimistic Locking）悲观锁（Perssimisitc Lock）</code><br>对于所有而言：<br><strong>悲观锁：假定会发生并发冲突，屏蔽一切可能违反数据完整性的操作。<br>乐观锁：假设不会发生并发冲突</strong></p>
+<p>对于Java而言：<br>悲观锁是一个<strong>独占锁</strong>的概念，假设这个<strong>资源</strong>一定会发生并发问题，当一个<strong>资源</strong>不可用时， 强制让其他进程挂起，直到这个<strong>资源</strong>被释放，才唤醒其他等待进程，进行下一轮争夺<strong>资源</strong>和上锁。</p>
+<p>乐观锁则是假设这个<strong>资源</strong>不会产生并发问题，进行了处理流程，但是要对结果进行检查，如果因为并发冲突问题而产生了错误，则重试原操作，直到成功并正确。</p>
+<h5 id="有哪些锁关键字？"><a href="#有哪些锁关键字？" class="headerlink" title="有哪些锁关键字？"></a>有哪些锁关键字？</h5><p>Java中共有两个锁关键字<code>synchronized</code> <code>volatile</code></p>
+<p><strong>synchronized</strong><br>1.典型的悲观锁机制， 可以修饰<strong>方法、语句块</strong>，从而实现<strong>同一时刻只有一个线程能够执行</strong><br>2.具有<strong>原子性、可见性</strong></p>
+<p><strong>volatile</strong><br>1.修饰<strong>变量</strong>，保证线程在每次使用变量的时候，都会读取变量修改后的最的值。<br>2.具有<strong>可见性</strong><br>3.volatile可以禁止进行指令重排。</p>
+<pre><code>指令重排是指处理器为了提高程序运行效率，可能会对输入代码进行优化，它不保证各个语句的执行顺序同代码中的顺序一致，但是它会保证程序最终执行结果和代码顺序执行的结果是一致的。指令重排序不会影响单个线程的执行，但是会影响到线程并发执行的正确性。
+</code></pre><p>程序执行到volatile修饰变量的读操作或者写操作时，在其前面的<strong>操作肯定已经完成</strong>，且结果已经对后面的操作可见，在其后面的操作肯定还没有进行。</p>
+<hr>
+<h6 id="题外注"><a href="#题外注" class="headerlink" title="题外注"></a>题外注</h6><pre><code>原子性：保持一致，要么不开始，开始必定要完成。
+可见性：一旦修改，值对所有进程显示的都是最新值。
+</code></pre>
           
         
       

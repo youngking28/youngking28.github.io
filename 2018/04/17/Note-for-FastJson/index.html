@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="youngking&#39;s Nest">
 <meta property="og:description" content="1：通过SerializeFilter来定义fastjson。tojsonstring方法输出的json属性格式     SerializeFilter是通过编程扩展的方式定制序列化。     fastjson支持6种SerializeFilter，用于不同场景的定制序列化。      PropertyPreFilter 根据PropertyName判断是否序列化      PropertyFil">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-17T08:48:48.000Z">
+<meta property="og:updated_time" content="2018-04-18T02:54:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Note for FastJson">
 <meta name="twitter:description" content="1：通过SerializeFilter来定义fastjson。tojsonstring方法输出的json属性格式     SerializeFilter是通过编程扩展的方式定制序列化。     fastjson支持6种SerializeFilter，用于不同场景的定制序列化。      PropertyPreFilter 根据PropertyName判断是否序列化      PropertyFil">
@@ -324,16 +324,8 @@
 
 
 代码：
-
-    private static SerializerFeature[] features = {
-            SerializerFeature.WriteNullNumberAsZero,
-            SerializerFeature.WriteNullStringAsEmpty,
-            SerializerFeature.WriteMapNullValue,
-            SerializerFeature.DisableCircularReferenceDetect,
-            SerializerFeature.WriteDateUseDateFormat
-
-    };
-</code></pre><p>2、    自定义定制序列化 (使用了自定义定制序列化后，就不会读取 anotation的序列化配置)</p>
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> SerializerFeature[] features = &#123;</span><br><span class="line">        SerializerFeature.WriteNullNumberAsZero,</span><br><span class="line">        SerializerFeature.WriteNullStringAsEmpty,</span><br><span class="line">        SerializerFeature.WriteMapNullValue,</span><br><span class="line">        SerializerFeature.DisableCircularReferenceDetect,</span><br><span class="line">        SerializerFeature.WriteDateUseDateFormat</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>2、    自定义定制序列化 (使用了自定义定制序列化后，就不会读取 anotation的序列化配置)</p>
 <pre><code>PropertyPreFilter 根据PropertyName判断是否序列化
 PropertyFilter 根据PropertyName和PropertyValue来判断是否序列化
 NameFilter 修改Key，如果需要修改Key,process返回值则可
@@ -352,29 +344,13 @@ AfterFilter 序列化时在最后添加内容
     JSON.toJSONString(result, nameFilter, features);
 </code></pre><p>3、驼峰转下划线方法</p>
 <pre><code>代码：
-
-    public class StrUtils {
-        public static String underscoreName(String camelCaseName) {
-            StringBuilder result = new StringBuilder();
-            if (camelCaseName != null &amp;&amp; camelCaseName.length() &gt; 0) {
-                result.append(camelCaseName.substring(0, 1).toLowerCase());
-                for (int i = 1; i &lt; camelCaseName.length(); i++) {
-                    char ch = camelCaseName.charAt(i);
-                    if (Character.isUpperCase(ch)) {
-                        result.append(&quot;_&quot;);
-                        result.append(Character.toLowerCase(ch));
-                    } else {
-                        result.append(ch);
-                    }
-                }
-            }
-            return result.toString();
-        }
-    }
-</code></pre><p>4、FastJson 解析报错deserializer error</p>
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">      <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StrUtils</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">underscoreName</span><span class="params">(String camelCaseName)</span> </span>&#123;</span><br><span class="line">        StringBuilder result = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">if</span> (camelCaseName != <span class="keyword">null</span> &amp;&amp; camelCaseName.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            result.append(camelCaseName.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase());</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; camelCaseName.length(); i++) &#123;</span><br><span class="line">                <span class="keyword">char</span> ch = camelCaseName.charAt(i);</span><br><span class="line">                <span class="keyword">if</span> (Character.isUpperCase(ch)) &#123;</span><br><span class="line">                    result.append(<span class="string">"_"</span>);</span><br><span class="line">                    result.append(Character.toLowerCase(ch));</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    result.append(ch);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4、FastJson 解析报错deserializer error</p>
 <pre><code>1.关闭ASM
-    设置ParserConfig.getGlobalInstance().setAsmEnable(false); 
+    设置
+</code></pre><pre><code class="java">ParserConfig.getGlobalInstance().setAsmEnable(<span class="keyword">false</span>); 
 </code></pre>
+
       
     </div>
     
