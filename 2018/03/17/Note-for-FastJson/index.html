@@ -79,13 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="youngking&#39;s Nest">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="1：通过SerializeFilter来定义fastjson。tojsonstring方法输出的json属性格式     SerializeFilter是通过编程扩展的方式定制序列化。     fastjson支持6种SerializeFilter，用于不同场景的定制序列化。      PropertyPreFilter 根据PropertyName判断是否序列化      PropertyFil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Note for FastJson">
+<meta property="og:url" content="http://yoursite.com/2018/03/17/Note-for-FastJson/index.html">
 <meta property="og:site_name" content="youngking&#39;s Nest">
+<meta property="og:description" content="1：通过SerializeFilter来定义fastjson。tojsonstring方法输出的json属性格式     SerializeFilter是通过编程扩展的方式定制序列化。     fastjson支持6种SerializeFilter，用于不同场景的定制序列化。      PropertyPreFilter 根据PropertyName判断是否序列化      PropertyFil">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-19T10:08:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="youngking&#39;s Nest">
+<meta name="twitter:title" content="Note for FastJson">
+<meta name="twitter:description" content="1：通过SerializeFilter来定义fastjson。tojsonstring方法输出的json属性格式     SerializeFilter是通过编程扩展的方式定制序列化。     fastjson支持6种SerializeFilter，用于不同场景的定制序列化。      PropertyPreFilter 根据PropertyName判断是否序列化      PropertyFil">
 
 
 
@@ -115,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/17/Note-for-FastJson/"/>
 
 
 
 
 
-  <title>youngking's Nest</title>
+  <title>Note for FastJson | youngking's Nest</title>
   
 
 
@@ -140,8 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <a href="https://github.com/youngking28"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
@@ -226,401 +229,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/19/redis效率小解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jing.yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="youngking's Nest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/19/redis效率小解/" itemprop="url">redis效率小解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-19T15:06:47+08:00">
-                2018-04-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><pre><code>redis为什么效率高？
-redis的主要设计模式是什么？好在哪里？
-</code></pre><h4 id="redis为什么效率高？"><a href="#redis为什么效率高？" class="headerlink" title="redis为什么效率高？"></a>redis为什么效率高？</h4><p>通过了解了redis的文档， 得知redis的读取效率可以达到110000/s, 写入效率80000/s。<br>在被学长询问到：为什么redis<strong>单进程单线程</strong>还可以有这么高的效率？<br>我不假思索的答：完全使用内存，数据结构简单。<br>学长： :)</p>
-<p>之后我看了不少文档，加上了自己的理解，总结出共有三个特性使得redis效率惊人：</p>
-<pre><code>1、完全操作内存
-2、数据结构简单
-3、单线程多路I/O复用
-</code></pre><p>无疑，<strong>完全操作内存</strong>， 这是redis效率惊人的原因之一，毫无疑问。那单线程的redis和多线程memcached同样操作内存，却达到效率持平，这是为什么呢？这就是<strong>单线程多路I/O复用</strong>的功劳了。</p>
-<p>memcached采用的是libevent（网络事件通知库），主线程不断的遍历询问网络端口，发现有读写操作，则丢给work线程（开好的子线程）去处理，这里的主要开销则是主线程的不断轮询。</p>
-<p>redis则是自己包装了一套轻量级的select、epoll、evport、kqueues通用接口实现<code>ae_event</code>，减免了一些在自己框架中不必要的操作，在linux下默认使用epoll方法，<strong>不用进行轮询</strong>，不做无差别轮询复制，当事件产生即处理，处理线程复用，大大减少了io连接的效率流失，从而提升了效率，丝毫不比多线程的memcached差，甚至超越，又因为redis的方案处理多样化，故而被许多企业青睐。</p>
-<p>PS：写到这里，有一个小疑问，那么当redis开启多线程，效率会不会更高？（之后的研究方向有了。。。）</p>
-<h4 id="redis的主要设计模式是什么？好在哪里？"><a href="#redis的主要设计模式是什么？好在哪里？" class="headerlink" title="redis的主要设计模式是什么？好在哪里？"></a>redis的主要设计模式是什么？好在哪里？</h4><p>其实仔细看完第一个问题的答案， 就对这个问题心中有数了。<br>redis主要的设计模式依旧是Reactor,但是它在基础调用中首选了epoll，这样就免去了很多无差别轮询，和句柄复制，从而大大提高了效率。</p>
-<h6 id="好在哪里？"><a href="#好在哪里？" class="headerlink" title="好在哪里？"></a>好在哪里？</h6><p>速度快效率高，这已经不用再多说。单线程的代码简洁优雅，逻辑清晰自然，不存在多线程切换导致的性能损耗，不用有锁的问题继而更不会出现deadlock的可能。</p>
-<hr>
-<h6 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h6><p><code>select、epoll、kqueues</code>是三种常见的I/O模型实现方法，select是I/O multiplxing的实现，<br>而epoll和kqueues是高级的select，memcached使用的就是select，需要大量轮询。而epoll和kqueues则实现当有事件产生即返回产生事件的句柄，不用轮询，epoll是Lunix特有，而kqueue是unix中的实现方法。</p>
-<p><code>evport</code>是libevent的一个类库，产生事件接口。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/hey-my-blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jing.yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="youngking's Nest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/17/hey-my-blog/" itemprop="url">hey, my blog</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T15:39:38+08:00">
-                2018-04-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>hello world</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/Java锁－小解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jing.yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="youngking's Nest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/17/Java锁－小解/" itemprop="url">Java锁－小解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T10:24:29+08:00">
-                2018-04-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><pre><code>锁是什么，Java为什么需要锁？
-有哪些锁？
-有哪些锁关键字？
-</code></pre><h5 id="锁是什么-Java为什么需要锁？"><a href="#锁是什么-Java为什么需要锁？" class="headerlink" title="锁是什么, Java为什么需要锁？"></a>锁是什么, Java为什么需要锁？</h5><p>如果要谈论起锁这件事情，那么一定要了解一下多进程并发。<br>简单理解就是 <strong>同时</strong> 在干某件事情。<br>这里的同时，就特别重要。例如说对于一个方法， 同时被5个地方调用，这时候就有了<strong>资源</strong>问题。</p>
-<p><strong>一起拿到了这个资源，</strong>那么该如何分配这个资源？<br>从根本上而言， 没有绝对的并发。时间颗粒度有极为细小的区分，只是这段方法或者这个资源还没有被上一个调用者使用完毕，就要被下一个调用者使用，这个时候就产生了并发现象，产生数据错乱，甚至死锁<code>deadlock</code>。</p>
-<p>这就是为什么Java为什么需要锁的原因。</p>
-<p>Java的锁是，对这个<strong>资源</strong>上锁，实质上是给这个<strong>资源</strong>一个标志，告诉所有人：你们这些人得按规矩使用这个<strong>资源</strong>，要排队！上一个还没用完，下一个不准使用！等着！</p>
-<h5 id="有哪些锁？"><a href="#有哪些锁？" class="headerlink" title="有哪些锁？"></a>有哪些锁？</h5><p>总体而言， 有两种锁机制。<br><code>乐观锁（Optimistic Locking）悲观锁（Perssimisitc Lock）</code><br>对于所有而言：<br><strong>悲观锁：假定会发生并发冲突，屏蔽一切可能违反数据完整性的操作。<br>乐观锁：假设不会发生并发冲突</strong></p>
-<p>对于Java而言：<br>悲观锁是一个<strong>独占锁</strong>的概念，假设这个<strong>资源</strong>一定会发生并发问题，当一个<strong>资源</strong>不可用时， 强制让其他进程挂起，直到这个<strong>资源</strong>被释放，才唤醒其他等待进程，进行下一轮争夺<strong>资源</strong>和上锁。</p>
-<p>乐观锁则是假设这个<strong>资源</strong>不会产生并发问题，进行了处理流程，但是要对结果进行检查，如果因为并发冲突问题而产生了错误，则重试原操作，直到成功并正确。</p>
-<h5 id="有哪些锁关键字？"><a href="#有哪些锁关键字？" class="headerlink" title="有哪些锁关键字？"></a>有哪些锁关键字？</h5><p>Java中共有两个锁关键字<code>synchronized</code> <code>volatile</code></p>
-<p><strong>synchronized</strong><br>1.典型的悲观锁机制， 可以修饰<strong>方法、语句块</strong>，从而实现<strong>同一时刻只有一个线程能够执行</strong><br>2.具有<strong>原子性、可见性</strong></p>
-<p><strong>volatile</strong><br>1.修饰<strong>变量</strong>，保证线程在每次使用变量的时候，都会读取变量修改后的最新的值。<br>2.具有<strong>可见性</strong><br>3.volatile可以禁止进行指令重排。</p>
-<pre><code>指令重排是指处理器为了提高程序运行效率，可能会对输入代码进行优化，它不保证各个语句的执行顺序同代码中的顺序一致，但是它会保证程序最终执行结果和代码顺序执行的结果是一致的。指令重排序不会影响单个线程的执行，但是会影响到线程并发执行的正确性。
-</code></pre><p>程序执行到volatile修饰变量的读操作或者写操作时，在其前面的<strong>操作肯定已经完成</strong>，且结果已经对后面的操作可见，在其后面的操作肯定还没有进行。</p>
-<hr>
-<h6 id="题外注"><a href="#题外注" class="headerlink" title="题外注"></a>题外注</h6><pre><code>原子性：保持一致，要么不开始，开始必定要完成。
-可见性：一旦修改，值对所有进程显示的都是最新值。
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -650,9 +261,7 @@ redis的主要设计模式是什么？好在哪里？
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/17/Note-for-FastJson/" itemprop="url">Note for FastJson</a></h1>
+          <h1 class="post-title" itemprop="name headline">Note for FastJson</h1>
         
 
         <div class="post-meta">
@@ -702,9 +311,7 @@ redis的主要设计模式是什么？好在哪里？
       
 
       
-        
-          
-            <p>1：通过SerializeFilter来定义fastjson。tojsonstring方法输出的json属性格式</p>
+        <p>1：通过SerializeFilter来定义fastjson。tojsonstring方法输出的json属性格式</p>
 <pre><code>    SerializeFilter是通过编程扩展的方式定制序列化。
     fastjson支持6种SerializeFilter，用于不同场景的定制序列化。
 
@@ -744,8 +351,6 @@ AfterFilter 序列化时在最后添加内容
 </code></pre><pre><code class="java">ParserConfig.getGlobalInstance().setAsmEnable(<span class="keyword">false</span>); 
 </code></pre>
 
-          
-        
       
     </div>
     
@@ -762,12 +367,28 @@ AfterFilter 序列化时在最后添加内容
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/17/Java锁－小解/" rel="prev" title="Java锁－小解">
+                Java锁－小解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -777,10 +398,11 @@ AfterFilter 序列化时在最后添加内容
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -788,6 +410,10 @@ AfterFilter 序列化时在最后添加内容
 
 
           
+
+  
+
+
 
         </div>
         
@@ -993,6 +619,10 @@ AfterFilter 序列化时在最后添加内容
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
