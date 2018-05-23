@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="框架原理," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="前言redis为什么效率高？ redis的主要设计模式是什么？好在哪里？ redis为什么效率高？通过了解了redis的文档， 得知redis的读取效率可以达到110000/s, 写入效率80000/s。在被学长询问到：为什么redis单进程单线程还可以有这么高的效率？我不假思索的答：完全使用内存，数据结构简单。学长： :) 之后看了不少文档，加上了自己的理解，总结出共有三个特性使得redis效率">
-<meta name="keywords" content="框架原理">
+<meta name="description" content="idea如何结合tomcat，部署web程序。 下载和安装tomcat，这里就不赘述了。 先在idea中配置tomcat。 之后， 在idea的module setting中，先对你的工程设置好相对应的文件夹类型，idea中有Sources（源文件夹），Tests（测试文件夹）， Resources（资源文件夹），TestResource（测试资源文件夹），Exclude（排除文件夹）五种。其中，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="redis效率小解">
-<meta property="og:url" content="http://yoursite.com/2018/04/19/redis效率小解/index.html">
+<meta property="og:title" content="Deploy webapp with idea and tomcat">
+<meta property="og:url" content="http://yoursite.com/2018/05/23/tomcat/index.html">
 <meta property="og:site_name" content="youngking&#39;s Nest">
-<meta property="og:description" content="前言redis为什么效率高？ redis的主要设计模式是什么？好在哪里？ redis为什么效率高？通过了解了redis的文档， 得知redis的读取效率可以达到110000/s, 写入效率80000/s。在被学长询问到：为什么redis单进程单线程还可以有这么高的效率？我不假思索的答：完全使用内存，数据结构简单。学长： :) 之后看了不少文档，加上了自己的理解，总结出共有三个特性使得redis效率">
+<meta property="og:description" content="idea如何结合tomcat，部署web程序。 下载和安装tomcat，这里就不赘述了。 先在idea中配置tomcat。 之后， 在idea的module setting中，先对你的工程设置好相对应的文件夹类型，idea中有Sources（源文件夹），Tests（测试文件夹）， Resources（资源文件夹），TestResource（测试资源文件夹），Exclude（排除文件夹）五种。其中，">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-20T01:39:42.000Z">
+<meta property="og:updated_time" content="2018-05-23T12:39:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="redis效率小解">
-<meta name="twitter:description" content="前言redis为什么效率高？ redis的主要设计模式是什么？好在哪里？ redis为什么效率高？通过了解了redis的文档， 得知redis的读取效率可以达到110000/s, 写入效率80000/s。在被学长询问到：为什么redis单进程单线程还可以有这么高的效率？我不假思索的答：完全使用内存，数据结构简单。学长： :) 之后看了不少文档，加上了自己的理解，总结出共有三个特性使得redis效率">
+<meta name="twitter:title" content="Deploy webapp with idea and tomcat">
+<meta name="twitter:description" content="idea如何结合tomcat，部署web程序。 下载和安装tomcat，这里就不赘述了。 先在idea中配置tomcat。 之后， 在idea的module setting中，先对你的工程设置好相对应的文件夹类型，idea中有Sources（源文件夹），Tests（测试文件夹）， Resources（资源文件夹），TestResource（测试资源文件夹），Exclude（排除文件夹）五种。其中，">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/19/redis效率小解/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/23/tomcat/"/>
 
 
 
 
 
-  <title>redis效率小解 | youngking's Nest</title>
+  <title>Deploy webapp with idea and tomcat | youngking's Nest</title>
   
 
 
@@ -245,7 +244,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/19/redis效率小解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/23/tomcat/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jing.yang">
@@ -262,7 +261,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">redis效率小解</h1>
+          <h1 class="post-title" itemprop="name headline">Deploy webapp with idea and tomcat</h1>
         
 
         <div class="post-meta">
@@ -274,8 +273,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-19T15:06:47+08:00">
-                2018-04-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-23T20:16:48+08:00">
+                2018-05-23
               </time>
             
 
@@ -312,25 +311,13 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><pre><code>redis为什么效率高？
-redis的主要设计模式是什么？好在哪里？
-</code></pre><h4 id="redis为什么效率高？"><a href="#redis为什么效率高？" class="headerlink" title="redis为什么效率高？"></a>redis为什么效率高？</h4><p>通过了解了redis的文档， 得知redis的读取效率可以达到110000/s, 写入效率80000/s。<br>在被学长询问到：为什么redis<strong>单进程单线程</strong>还可以有这么高的效率？<br>我不假思索的答：完全使用内存，数据结构简单。<br>学长： :)</p>
-<p>之后看了不少文档，加上了自己的理解，总结出共有三个特性使得redis效率惊人：</p>
-<pre><code>1、完全操作内存
-2、数据结构简单
-3、单线程多路I/O复用
-</code></pre><p>无疑，<strong>完全操作内存</strong>， 这是redis效率惊人的原因之一。那单线程的redis和多线程memcached同样操作内存，却达到效率持平，这是为什么呢？这就是<strong>单线程多路I/O复用</strong>的功劳了。</p>
-<p>memcached采用的是libevent（网络事件通知库），主线程不断的遍历询问网络端口，发现有读写操作，则丢给work线程（开好的子线程）去处理，这里的主要开销则是主线程的不断轮询。</p>
-<p>redis则是自己包装了一套轻量级的select、epoll、evport、kqueues通用接口实现<code>ae_event</code>，减免了一些在自己框架中不必要的操作，在linux下默认使用epoll方法，<strong>不用进行轮询</strong>，不做无差别轮询复制，当事件产生即处理，处理线程复用，大大减少了io连接的效率流失，从而提升了效率，丝毫不比多线程的memcached差，甚至超越，又因为redis的方案处理多样化，故而被许多企业青睐。</p>
-<p>PS：写到这里，有一个小疑问，那么当redis开启多线程，效率会不会更高？（之后的研究方向有了。。。）</p>
-<p>更新：</p>
-<pre><code>据经验丰富同事(block)告知，redis操作应该颗粒度很小，处理方便迅速，这样一来，多线程之间的切换损耗有可能比处理操作的时间更长。
-所以redis不用开启多进程，如果要多核cpu无法得到充分利用，可以选择开启多个单例。
-</code></pre><h4 id="redis的主要设计模式是什么？好在哪里？"><a href="#redis的主要设计模式是什么？好在哪里？" class="headerlink" title="redis的主要设计模式是什么？好在哪里？"></a>redis的主要设计模式是什么？好在哪里？</h4><p>其实仔细看完第一个问题的答案， 就对这个问题心中有数了。<br>redis主要的设计模式依旧是Reactor,但是它在基础调用中首选了epoll，这样就免去了很多无差别轮询，和句柄复制，从而大大提高了效率。</p>
-<h6 id="好在哪里？"><a href="#好在哪里？" class="headerlink" title="好在哪里？"></a>好在哪里？</h6><p>速度快效率高，这已经不用再多说。单线程的代码简洁优雅，逻辑清晰自然，不存在多线程切换导致的性能损耗，不用有锁的问题继而更不会出现deadlock的可能。</p>
-<hr>
-<h6 id="题外"><a href="#题外" class="headerlink" title="题外"></a>题外</h6><p><code>select、epoll、kqueues</code>是三种常见的I/O模型实现方法，select是I/O multiplxing的实现，<br>而epoll和kqueues是高级的select，memcached使用的就是select，需要大量轮询。而epoll和kqueues则实现当有事件产生即返回产生事件的句柄，不用轮询，epoll是Lunix特有，而kqueue是unix中的实现方法。</p>
-<p><code>evport</code>是libevent的一个类库，产生事件接口。</p>
+        <p>idea如何结合tomcat，部署web程序。</p>
+<p>下载和安装tomcat，这里就不赘述了。</p>
+<p>先在idea中配置tomcat。</p>
+<p>之后， 在idea的module setting中，先对你的工程设置好相对应的文件夹类型，idea中有Sources（源文件夹），Tests（测试文件夹）， Resources（资源文件夹），TestResource（测试资源文件夹），Exclude（排除文件夹）五种。<br>其中，Sources中的java文件，会被编译生成class文件，输出到指定path下（在module中可以设置）。<br>Resources则是项目所需要的文件配置，将会被一起打包放入输出path下，<strong>strutcs.xml等框架配置文件必须存放，否则将不会被打包</strong>， eclipse则是一起打包。</p>
+<p>设置完成后，去Facets中，创建刚刚moudle下的web子包，其中设置好web.xml的路径， 以及web页面的文件夹路径（WebRoot或者web）。</p>
+<p>下一步去Artifacts中，将上面所设置的web包打包成一个 web application expload， 其中需要在WEB-INF下的classes指定上面module的complie output， 这样module编译后的class将会被打包进这个artifacts中。<br>在这一步中，有时候可能会碰到，资源文件无法被编译（笔者尝试多种方案后，暂时没有找到原因和解决方案），这时可以在artifacts这一步中，添加玩module的complie output，同时将资源文件的文件夹添加进这个artifacts， 就可以了。</p>
+<p>最后，在tomcat， deploy选项中，加入这个artifacts， 启动tomcat， 就完成了部署！</p>
 
       
     </div>
@@ -346,12 +333,6 @@ redis的主要设计模式是什么？好在哪里？
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/框架原理/" rel="tag"># 框架原理</a>
-          
-        </div>
-      
 
       
       
@@ -361,8 +342,8 @@ redis的主要设计模式是什么？好在哪里？
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/17/hey-my-blog/" rel="next" title="hey, my blog">
-                <i class="fa fa-chevron-left"></i> hey, my blog
+              <a href="/2018/04/19/redis效率小解/" rel="next" title="redis效率小解">
+                <i class="fa fa-chevron-left"></i> redis效率小解
               </a>
             
           </div>
@@ -371,8 +352,8 @@ redis的主要设计模式是什么？好在哪里？
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/23/tomcat/" rel="prev" title="Deploy webapp with idea and tomcat">
-                Deploy webapp with idea and tomcat <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/23/deploy webapp with idea and tomcat/" rel="prev" title="tomcat">
+                tomcat <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -425,17 +406,8 @@ redis的主要设计模式是什么？好在哪里？
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -486,22 +458,6 @@ redis的主要设计模式是什么？好在哪里？
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#redis为什么效率高？"><span class="nav-number">1.1.</span> <span class="nav-text">redis为什么效率高？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis的主要设计模式是什么？好在哪里？"><span class="nav-number">1.2.</span> <span class="nav-text">redis的主要设计模式是什么？好在哪里？</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#好在哪里？"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">好在哪里？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#题外"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">题外</span></a></li></ol></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
