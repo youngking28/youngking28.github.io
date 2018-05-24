@@ -79,14 +79,28 @@
 
 
 
+<meta name="description" content="idea如何结合tomcat，部署web程序。 下载和安装tomcat，这里就不赘述了。 先在idea中配置tomcat。选择添加tomcat server设置server名字和home地址 之后， 在idea的module setting(右键工程，选中open module setting)中，先对你的工程设置好相对应的文件夹类型，idea中有Sources（源文件夹），Tests（测试文件夹">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tomcat">
+<meta property="og:title" content="Deploy webapp with idea and tomcat">
 <meta property="og:url" content="http://yoursite.com/2018/05/23/deploy webapp with idea and tomcat/index.html">
 <meta property="og:site_name" content="youngking&#39;s Nest">
+<meta property="og:description" content="idea如何结合tomcat，部署web程序。 下载和安装tomcat，这里就不赘述了。 先在idea中配置tomcat。选择添加tomcat server设置server名字和home地址 之后， 在idea的module setting(右键工程，选中open module setting)中，先对你的工程设置好相对应的文件夹类型，idea中有Sources（源文件夹），Tests（测试文件夹">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-23T12:16:48.000Z">
+<meta property="og:image" content="http://yoursite.com/images/deploy/1.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/deploy/2.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/deploy/3.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/deploy/4.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/deploy/5.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/deploy/6.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/deploy/7.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/deploy/8.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/deploy/9.jpeg">
+<meta property="og:image" content="http://yoursite.com/images/deploy/10.jpeg">
+<meta property="og:updated_time" content="2018-05-24T02:25:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tomcat">
+<meta name="twitter:title" content="Deploy webapp with idea and tomcat">
+<meta name="twitter:description" content="idea如何结合tomcat，部署web程序。 下载和安装tomcat，这里就不赘述了。 先在idea中配置tomcat。选择添加tomcat server设置server名字和home地址 之后， 在idea的module setting(右键工程，选中open module setting)中，先对你的工程设置好相对应的文件夹类型，idea中有Sources（源文件夹），Tests（测试文件夹">
+<meta name="twitter:image" content="http://yoursite.com/images/deploy/1.jpeg">
 
 
 
@@ -122,7 +136,7 @@
 
 
 
-  <title>tomcat | youngking's Nest</title>
+  <title>Deploy webapp with idea and tomcat | youngking's Nest</title>
   
 
 
@@ -258,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">tomcat</h1>
+          <h1 class="post-title" itemprop="name headline">Deploy webapp with idea and tomcat</h1>
         
 
         <div class="post-meta">
@@ -308,7 +322,14 @@
       
 
       
-        
+        <p>idea如何结合tomcat，部署web程序。</p>
+<p>下载和安装tomcat，这里就不赘述了。</p>
+<p>先在idea中配置tomcat。<br>选择添加tomcat server<br><img src="/images/deploy/1.jpeg" alt=""><br>设置server名字和home地址<br><img src="/images/deploy/2.jpeg" alt=""><br><img src="/images/deploy/3.jpeg" alt=""><br><img src="/images/deploy/4.jpeg" alt=""></p>
+<p>之后， 在idea的module setting(右键工程，选中open module setting)中，先对你的工程设置好相对应的文件夹类型，idea中有Sources（源文件夹），Tests（测试文件夹）， Resources（资源文件夹），TestResource（测试资源文件夹），Exclude（排除文件夹）五种。<br><img src="/images/deploy/5.jpeg" alt=""><br>其中，Sources中的java文件，会被编译生成class文件，输出到指定path下（在module中可以设置）。<br>Resources则是项目所需要的文件配置，将会被一起打包放入输出path下，<strong>strutcs.xml等框架配置文件必须存放，否则将不会被打包</strong>， eclipse则是会一起打包。</p>
+<p>设置完成后，去Facets中，创建刚刚moudle下的web子包，其中设置好web.xml的路径， 以及web页面的文件夹路径（WebRoot或者web）。<br><img src="/images/deploy/6.jpeg" alt=""><br><img src="/images/deploy/7.jpeg" alt=""></p>
+<p>下一步去Artifacts中，将上面所设置的web包打包成一个 web application expload， 其中需要在WEB-INF下的classes指定上面module的complie output， 这样module编译后的class将会被打包进这个artifacts中。<br><img src="/images/deploy/8.jpeg" alt=""><br>在这一步中，有时候可能会碰到，资源文件无法被编译（笔者尝试多种方案后，暂时没有找到原因和解决方案），这时可以在artifacts这一步中，添加玩module的complie output，同时将资源文件的文件夹添加进这个artifacts， 就可以了。<br><img src="/images/deploy/9.jpeg" alt=""></p>
+<p>最后，在tomcat， deploy选项中，加入这个artifacts， 启动tomcat， 就完成了部署！<br><img src="/images/deploy/10.jpeg" alt=""></p>
+
       
     </div>
     
@@ -332,8 +353,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/23/tomcat/" rel="next" title="Deploy webapp with idea and tomcat">
-                <i class="fa fa-chevron-left"></i> Deploy webapp with idea and tomcat
+              <a href="/2018/04/19/redis效率小解/" rel="next" title="redis效率小解">
+                <i class="fa fa-chevron-left"></i> redis效率小解
               </a>
             
           </div>
@@ -408,7 +429,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
