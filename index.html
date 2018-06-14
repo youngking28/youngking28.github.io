@@ -241,6 +241,142 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/14/位运算小解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jing.yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="youngking's Nest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/14/位运算小解/" itemprop="url">位运算小解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-14T18:38:14+08:00">
+                2018-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>  笔者使用alibaba fastjson JSON.parseObject()方法将json转换为map时，map顺序变动（当有嵌套json时， linkedMap.class只能保证第一层级顺序）。从而尝试观看fastjson源码，发现了处使用了位运算做了骚操作，忍不住记录一下。</p>
+<p><strong>基本四个位运算举例</strong></p>
+<p>15  ＝ 1 1 1 1<br>14  ＝ 1 1 1 0</p>
+<p><code>&amp;</code>后 ＝ 1 1 1 0    (与) 上下同为1， 则为1<br><code>|</code>后 ＝ 1 1 1 1    (或) 上下有一个为1， 则为1<br><code>~</code>后 ＝ 0 0 0 0    (非) 单值取反<br><code>^</code>后 ＝ 0 0 0 1    (异或) 上下相同为0， 不同为1</p>
+<p><code>&lt;&lt;</code> 左移<br><code>&gt;&gt;</code> 右移</p>
+<p>ps：关注位运算时，尽量忽略掉他们的十进制值。</p>
+<p>之前尽管看过，但还是没有应用经验。</p>
+<p>fastjson中:</p>
+<p><code>public final boolean isEnabled(int feature) {
+        return (this.features &amp; feature) != 0;
+    }</code><br>乍一看，这在做什么？<br>继续看源码得知：<br>this.<code>lexer.isEnabled(Feature.OrderedField)</code><br>看到这里，才知道这大概意思是，判断转换器中是否有Feature.OrderedField选项。（this.是笔者为了方便理解， 自行加上，源码中没有）<br>可是， 做一下 &amp; 与运算并判断非0， 就可以得出转换器里存放Feature.OrderedField选项的结论了？<br>思考无解， 百度重新了解了一下四个位运算，同时看到有个人提到过， <strong>A |= B是把B标记在A中，(A &amp; B) != 0是可以判断A里是否有标记B</strong>。<br>经过取值计算验证， 得不出这个结论。 那回头继续看阿里爸爸为什么是这么做。</p>
+<p><code>Feature(){
+        mask = (1 &lt;&lt; ordinal());
+    }</code></p>
+<p>在重新了解位运算后， 再看到这段普通的构造函数。我就忽然明朗了。真的写的太漂亮了， 怪不得能用位运算做标记， 怪不得是阿里爸爸。<br>将1左移n位，每一位的1代表了一个Feature类型的启用。这将大大提升了 转换器你有哪些要求需要我注意的 这个操作的性能。从一堆的if判断中，变成了每一小个的位运算判断。</p>
+<p>另记录一个小技巧：不用第三个变量迅速完成赋值交换。<br><code>a = a ^ b, b = b ^ a, a = a ^ b</code></p>
+<p>Over。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/23/deploy webapp with idea and tomcat/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -953,7 +1089,7 @@ AfterFilter 序列化时在最后添加内容
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
