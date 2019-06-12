@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="hello world">
+<meta name="description" content="前记  个人不太理解，为何springboot可以使用jar包运行，却还要使用war包部署到简单tomcat中的场景。实际业务中遇到了这样的需求，就开始了一波踩坑。 正常情况：正常情况下的springboot打包war包，百度一搜一大把。这里就不多说了，这里列出笔者遇到的几个坑的地方。 1、springboot中无需web.xml文件，所以正常使用mvn-war-plugin 3.0.0以下版本会">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hey, my blog">
-<meta property="og:url" content="http://yoursite.com/2018/04/17/hey-my-blog/index.html">
+<meta property="og:title" content="maven springboot打包war包踩坑">
+<meta property="og:url" content="http://yoursite.com/2019/06/12/maven-springboot打包war包踩坑/index.html">
 <meta property="og:site_name" content="youngking&#39;s Nest">
-<meta property="og:description" content="hello world">
+<meta property="og:description" content="前记  个人不太理解，为何springboot可以使用jar包运行，却还要使用war包部署到简单tomcat中的场景。实际业务中遇到了这样的需求，就开始了一波踩坑。 正常情况：正常情况下的springboot打包war包，百度一搜一大把。这里就不多说了，这里列出笔者遇到的几个坑的地方。 1、springboot中无需web.xml文件，所以正常使用mvn-war-plugin 3.0.0以下版本会">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-19T10:08:11.000Z">
+<meta property="og:updated_time" content="2019-06-12T09:04:33.247Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hey, my blog">
-<meta name="twitter:description" content="hello world">
+<meta name="twitter:title" content="maven springboot打包war包踩坑">
+<meta name="twitter:description" content="前记  个人不太理解，为何springboot可以使用jar包运行，却还要使用war包部署到简单tomcat中的场景。实际业务中遇到了这样的需求，就开始了一波踩坑。 正常情况：正常情况下的springboot打包war包，百度一搜一大把。这里就不多说了，这里列出笔者遇到的几个坑的地方。 1、springboot中无需web.xml文件，所以正常使用mvn-war-plugin 3.0.0以下版本会">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/17/hey-my-blog/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/06/12/maven-springboot打包war包踩坑/"/>
 
 
 
 
 
-  <title>hey, my blog | youngking's Nest</title>
+  <title>maven springboot打包war包踩坑 | youngking's Nest</title>
   
 
 
@@ -244,7 +244,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/hey-my-blog/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/12/maven-springboot打包war包踩坑/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jing.yang">
@@ -261,7 +261,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">hey, my blog</h1>
+          <h1 class="post-title" itemprop="name headline">maven springboot打包war包踩坑</h1>
         
 
         <div class="post-meta">
@@ -273,8 +273,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T15:39:38+08:00">
-                2018-04-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-12T16:07:58+08:00">
+                2019-06-12
               </time>
             
 
@@ -311,7 +311,14 @@
       
 
       
-        <p>hello world</p>
+        <h6 id="前记"><a href="#前记" class="headerlink" title="前记"></a>前记</h6><p>  个人不太理解，为何springboot可以使用jar包运行，却还要使用war包部署到简单tomcat中的场景。实际业务中遇到了这样的需求，就开始了一波踩坑。</p>
+<h3 id="正常情况："><a href="#正常情况：" class="headerlink" title="正常情况："></a>正常情况：</h3><p>正常情况下的springboot打包war包，百度一搜一大把。这里就不多说了，这里列出笔者遇到的几个坑的地方。</p>
+<h4 id="1、"><a href="#1、" class="headerlink" title="1、"></a>1、</h4><p>springboot中无需web.xml文件，所以正常使用mvn-war-plugin 3.0.0以下版本会报错。<br>   则需要配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">    &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.6&lt;/version&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">        &lt;!--如果想在没有web.xml文件的情况下构建WAR，请设置为false。--&gt;</span><br><span class="line">        &lt;failOnMissingWebXml&gt;false&lt;/failOnMissingWebXml&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure></p>
+<p> 或者可以直接升级至mvn-war-plugin 3.0.0以上版本<br> <strong> PS:maven-war-plugin版本太低，也可能出现<br> Error assembling WAR: Failed to read filesystem attributes for xxx.xml </strong><br> 无法读取某些文件，这时候也可以尝试把plugin的版本往上升级一下。</p>
+<h4 id="2、"><a href="#2、" class="headerlink" title="2、"></a>2、</h4><p>  打war包的时候不需要<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="3、"><a href="#3、" class="headerlink" title="3、"></a>3、</h4><p>  如果这时候没有资源文件，和source文件，则需要在build标签下配置指明。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;sourceDirectory&gt;src/java&lt;/sourceDirectory&gt;</span><br><span class="line">&lt;resources&gt;</span><br><span class="line">    &lt;resource&gt;</span><br><span class="line">        &lt;directory&gt;src/resource&lt;/directory&gt;</span><br><span class="line">    &lt;/resource&gt;</span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure></p>
+<p> 正常的时候，这个可以不写的。可能因为我的pringboot版本太低，导致的一些奇奇怪怪的问题。</p>
+<p>至此，本人的坑踩完了。不得不说springboot是真的方便，war包也是轻松驾驭。</p>
 
       
     </div>
@@ -336,8 +343,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/17/Java锁－小解/" rel="next" title="Java锁－小解">
-                <i class="fa fa-chevron-left"></i> Java锁－小解
+              <a href="/2018/07/12/ajax的异步上传文件填坑以及contentType小解/" rel="next" title="基于jquery ajax的异步上传文件填坑以及contentType小解">
+                <i class="fa fa-chevron-left"></i> 基于jquery ajax的异步上传文件填坑以及contentType小解
               </a>
             
           </div>
@@ -346,8 +353,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/19/redis效率小解/" rel="prev" title="redis效率小解">
-                redis效率小解 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/12/cors跨域请求-移动端ajax-status为0问题踩坑/" rel="prev" title="cors跨域请求 移动端ajax status为0问题踩坑">
+                cors跨域请求 移动端ajax status为0问题踩坑 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -400,8 +407,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -452,6 +468,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#前记"><span class="nav-number">1.</span> <span class="nav-text">前记</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正常情况："><span class="nav-number"></span> <span class="nav-text">正常情况：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、"><span class="nav-number"></span> <span class="nav-text">1、</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、"><span class="nav-number"></span> <span class="nav-text">2、</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、"><span class="nav-number"></span> <span class="nav-text">3、</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

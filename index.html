@@ -241,6 +241,259 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/12/cors跨域请求-移动端ajax-status为0问题踩坑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jing.yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="youngking's Nest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/12/cors跨域请求-移动端ajax-status为0问题踩坑/" itemprop="url">cors跨域请求 移动端ajax status为0问题踩坑</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-12T16:34:25+08:00">
+                2019-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前记"><a href="#前记" class="headerlink" title="前记"></a>前记</h3><p>  笔者和前端小伙伴，明知是跨域请求，去搞了好多天没弄出来：chrome，各大pc浏览器测试成功，移动端，safari，微信（ios），支付宝（ios）请求失败，并status=0.</p>
+<h3 id="问题所在："><a href="#问题所在：" class="headerlink" title="问题所在："></a>问题所在：</h3><p>  正常情况下，cors跨域请求，后端只需要设置一下header就可以，java如下：<br><code>res.setHeader(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;)；
+  res.setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;*&quot;)；
+  res.setHeader(&quot;Access-Control-Allow-Headers&quot;, &quot;*&quot;)；
+  res.setHeader(&quot;Access-Control-Allow-Credentials&quot;, &quot;true&quot;);</code><br>  允许任何来源，允许任何方法，允许任何请求头，允许cookies。<br>  PS:允许任何方法是因为cors跨域请求，浏览器回先发起一个option请求，来尝试访问，成功得到204后就正常访问。<br>  但是这样pc端成功，移动端不成功。准确的说，应该是ios的移动端。</p>
+<h3 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h3><p>  经过各种google，找到个帖子，大致内容就是说：ios不支持:<br>    <code>Access-Control-Allow-Methods:*;Access-Control-Allow-Headers:*;</code><br>  经过笔者测试得出结论：ios下，safari不支持Headers:<em>，但是支持method:</em><br>  但是ios下微信，支付宝内嵌浏览器，两者均不支持为*。需要另外手写配置。<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.setHeader(&quot;Access-Control-Allow-Methods&quot;, &quot;GET, POST, OPTIONS&quot;);</span><br><span class="line">res.setHeader(&quot;Access-Control-Allow-Headers&quot;, &quot;DNT,web-token,app-token,Authorization,Accept,Origin,Keep-Alive,User-Agent,X-Mx-ReqToken,X-Data-Type,X-Auth-Token,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>PS:之后发现，前端小伙伴埋了个坑，微信，支付宝端中，以https来请求http的接口，导致的status=0.<br>所以可能微信，支付宝端同样支持method:*的配置。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/12/maven-springboot打包war包踩坑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jing.yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="youngking's Nest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/12/maven-springboot打包war包踩坑/" itemprop="url">maven springboot打包war包踩坑</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-12T16:07:58+08:00">
+                2019-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h6 id="前记"><a href="#前记" class="headerlink" title="前记"></a>前记</h6><p>  个人不太理解，为何springboot可以使用jar包运行，却还要使用war包部署到简单tomcat中的场景。实际业务中遇到了这样的需求，就开始了一波踩坑。</p>
+<h3 id="正常情况："><a href="#正常情况：" class="headerlink" title="正常情况："></a>正常情况：</h3><p>正常情况下的springboot打包war包，百度一搜一大把。这里就不多说了，这里列出笔者遇到的几个坑的地方。</p>
+<h4 id="1、"><a href="#1、" class="headerlink" title="1、"></a>1、</h4><p>springboot中无需web.xml文件，所以正常使用mvn-war-plugin 3.0.0以下版本会报错。<br>   则需要配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">    &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.6&lt;/version&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">        &lt;!--如果想在没有web.xml文件的情况下构建WAR，请设置为false。--&gt;</span><br><span class="line">        &lt;failOnMissingWebXml&gt;false&lt;/failOnMissingWebXml&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure></p>
+<p> 或者可以直接升级至mvn-war-plugin 3.0.0以上版本<br> <strong> PS:maven-war-plugin版本太低，也可能出现<br> Error assembling WAR: Failed to read filesystem attributes for xxx.xml </strong><br> 无法读取某些文件，这时候也可以尝试把plugin的版本往上升级一下。</p>
+<h4 id="2、"><a href="#2、" class="headerlink" title="2、"></a>2、</h4><p>  打war包的时候不需要<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="3、"><a href="#3、" class="headerlink" title="3、"></a>3、</h4><p>  如果这时候没有资源文件，和source文件，则需要在build标签下配置指明。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;sourceDirectory&gt;src/java&lt;/sourceDirectory&gt;</span><br><span class="line">&lt;resources&gt;</span><br><span class="line">    &lt;resource&gt;</span><br><span class="line">        &lt;directory&gt;src/resource&lt;/directory&gt;</span><br><span class="line">    &lt;/resource&gt;</span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure></p>
+<p> 正常的时候，这个可以不写的。可能因为我的pringboot版本太低，导致的一些奇奇怪怪的问题。</p>
+<p>至此，本人的坑踩完了。不得不说springboot是真的方便，war包也是轻松驾驭。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/12/ajax的异步上传文件填坑以及contentType小解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1266,7 +1519,7 @@ AfterFilter 序列化时在最后添加内容
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1316,7 +1569,7 @@ AfterFilter 序列化时在最后添加内容
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
