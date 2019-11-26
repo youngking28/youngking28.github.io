@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="hello world">
+<meta name="description" content="笔者参与一个罗森项目，项目中本使用的jar包是在windows， linux环境下正常使用，所用的为jdk1.8。  1.首先是，log4j上，其余环境中，log4j均正常使用。但是andorid环境下，log4j的文件配置无法正常读取log4j.properties，必须写配置类，并额外引入 android-logging-log4j包，才可以使用，广大网友们劝诫谨慎使用，麻烦且坑多。 故而">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hey, my blog">
-<meta property="og:url" content="http://yoursite.com/2018/04/17/hey-my-blog/index.html">
+<meta property="og:title" content="正常jar包与andorid环境下jar包的差异">
+<meta property="og:url" content="http://yoursite.com/2019/11/26/正常jar包与安卓环境下jar包的差异/index.html">
 <meta property="og:site_name" content="youngking&#39;s Nest">
-<meta property="og:description" content="hello world">
+<meta property="og:description" content="笔者参与一个罗森项目，项目中本使用的jar包是在windows， linux环境下正常使用，所用的为jdk1.8。  1.首先是，log4j上，其余环境中，log4j均正常使用。但是andorid环境下，log4j的文件配置无法正常读取log4j.properties，必须写配置类，并额外引入 android-logging-log4j包，才可以使用，广大网友们劝诫谨慎使用，麻烦且坑多。 故而">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-19T10:08:11.000Z">
+<meta property="og:updated_time" content="2019-11-26T08:36:24.401Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hey, my blog">
-<meta name="twitter:description" content="hello world">
+<meta name="twitter:title" content="正常jar包与andorid环境下jar包的差异">
+<meta name="twitter:description" content="笔者参与一个罗森项目，项目中本使用的jar包是在windows， linux环境下正常使用，所用的为jdk1.8。  1.首先是，log4j上，其余环境中，log4j均正常使用。但是andorid环境下，log4j的文件配置无法正常读取log4j.properties，必须写配置类，并额外引入 android-logging-log4j包，才可以使用，广大网友们劝诫谨慎使用，麻烦且坑多。 故而">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/17/hey-my-blog/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/11/26/正常jar包与安卓环境下jar包的差异/"/>
 
 
 
 
 
-  <title>hey, my blog | youngking's Nest</title>
+  <title>正常jar包与andorid环境下jar包的差异 | youngking's Nest</title>
   
 
 
@@ -244,7 +244,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/hey-my-blog/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/26/正常jar包与安卓环境下jar包的差异/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="jing.yang">
@@ -261,7 +261,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">hey, my blog</h1>
+          <h1 class="post-title" itemprop="name headline">正常jar包与andorid环境下jar包的差异</h1>
         
 
         <div class="post-meta">
@@ -273,8 +273,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T15:39:38+08:00">
-                2018-04-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-26T15:34:50+08:00">
+                2019-11-26
               </time>
             
 
@@ -311,7 +311,24 @@
       
 
       
-        <p>hello world</p>
+        <p>  笔者参与一个罗森项目，项目中本使用的jar包是在windows， linux环境下正常使用，所用的为jdk1.8。<br>  1.首先是，log4j上，其余环境中，log4j均正常使用。但是andorid环境下，log4j的文件配置无法正常读取log4j.properties，必须写配置类，并额外引入 android-logging-log4j包，才可以使用，广大网友们劝诫谨慎使用，麻烦且坑多。 故而转换为最原始的输出文件流写日志（因为单台的量不是特别大，性能稳够）<br>  2.其次在bean的序列化中，又再一次踩到了一个坑里。当一个bean的数值属性为bigdecimal时（据说是所有数值属性均为bigdecimal才会出现），fastjson则无法转换，会报个很奇怪的错<code>com.alibaba.fastjson.JSONException: Invalid int: &quot;49b6b6b733e292360be0-6041-4f8a-b1b7-95afc0eb8cbb.pngpngxT3ybXkv1rNlTHwAAACMAAQED&amp;zoom=originala6d0cbf3e8f25e24.jpg/132��������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������&quot;
+at com.alibaba.fastjson.parser.DefaultJSONParser.parseObject(DefaultJSONParser.java:687)
+at com.alibaba.fastjson.JSON.parseObject(JSON.java:383)
+at com.alibaba.fastjson.JSON.parseObject(JSON.java:351)
+at com.alibaba.fastjson.JSON.parseObject(JSON.java:314)
+at xxx.util.NetUtils.getResult(NetUtils.java:1060)
+at xxx$12.onResponse(ReserveAddActivity.java:576)
+at xxx$12.onResponse(ReserveAddActivity.java:573)
+at com.android.volley.toolbox.StringRequest.deliverResponse(StringRequest.java:67)
+at com.android.volley.toolbox.StringRequest.deliverResponse(StringRequest.java:30)
+at com.android.volley.ExecutorDelivery$ResponseDeliveryRunnable.run(ExecutorDelivery.java:99)
+at android.os.Handler.handleCallback(Handler.java:815)
+at android.os.Handler.dispatchMessage(Handler.java:104)
+at android.os.Looper.loop(Looper.java:207)
+at android.app.ActivityThread.main(ActivityThread.java:5765)
+at java.lang.reflect.Method.invoke(Native Method)
+at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:789)
+at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:679)</code><br>这个错翻看了源码，没有找到答案。业务要紧，遂放弃，使用gson则得到解决。<br>PS:虽然andorid也是java，但不愧是后爹养的，还是得用后爹家里的产品才适配。。</p>
 
       
     </div>
@@ -336,8 +353,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/17/Java锁－小解/" rel="next" title="Java锁－小解">
-                <i class="fa fa-chevron-left"></i> Java锁－小解
+              <a href="/2019/06/12/cors跨域请求-移动端ajax-status为0问题踩坑/" rel="next" title="cors跨域请求 移动端ajax status为0问题踩坑">
+                <i class="fa fa-chevron-left"></i> cors跨域请求 移动端ajax status为0问题踩坑
               </a>
             
           </div>
@@ -345,10 +362,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/19/redis效率小解/" rel="prev" title="redis效率小解">
-                redis效率小解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
